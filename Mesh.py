@@ -45,7 +45,8 @@ class MESHGRID(object):
     def plot_mesh(self):
         plt.plot(self.posx, self.posy, '.k')
     
-    def calc_dist(self, point):
+    def calc_dist(self, point, I):
+        sign = np.sign(I)
         x0, y0 = point
         distx = self.posx - x0
         disty = self.posy - y0
@@ -54,7 +55,7 @@ class MESHGRID(object):
                           out=np.zeros_like(dist))
         disty = np.divide(disty, dist, where=dist > 0.0,
                           out=np.zeros_like(dist))
-        vecx, vecy = rotate(distx, disty, pi/2.0)
+        vecx, vecy = rotate(distx, disty, sign*pi/2.0)
         return dist, vecx, vecy
 
 def rotate(vecx, vecy, angle):
