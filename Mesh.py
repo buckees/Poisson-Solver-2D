@@ -1,12 +1,4 @@
-# -*- coding: utf-8 -*-
 """
-Created on Thu Aug 27 21:25:20 2020
-
-@author: bucke
-"""
-
-"""
-Feature Model 2D
 Mesh file
 """
 
@@ -22,7 +14,8 @@ class MESHGRID(object):
         self.height = height # domain height in z direction
         self.nx = nx # nodes in x direction
         self.ny = ny # nodes in z direction
-        
+        self.delx = width/(nx-1) # delta x
+        self.dely = height/(ny-1) # delta y
         self.posx = np.linspace(-width/2.0, width/2.0, nx)
         self.posy = np.linspace(-width/2.0, width/2.0, nx)
         

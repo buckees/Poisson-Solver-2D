@@ -23,7 +23,7 @@ I = 1.0 # wire current in A
 # According to Ampere's law in integral form
 # B(r|r>r0) = mu0*I/(2*pi*r)
 #The earth's magnetic field is about 0.5 gauss. 
-width, height, nx, ny = 50.0, 50.0, 101, 101
+width, height, nx, ny = 10.0, 10.0, 51, 51
 mesh = MESHGRID(width, height, nx, ny)
 mesh.init_mesh()
 
@@ -40,8 +40,8 @@ for i in range(1, nx-2):
     A[(nx-2)*i-1, (ny-2)*i] = 0
     A[(ny-2)*i, (nx-2)*i-1] = 0
     
-b[0+(nx-2)*int(ny/2-1)+30] = MU0*I/(2.0*pi)
-b[-1-(nx-2)*int(ny/2-1)-30] = -MU0*I/(2.0*pi)
+b[0+(nx-2)*int(ny/2-1)+int(nx/2-1)] = MU0*I/(2.0*pi)
+#b[-1-(nx-2)*int(ny/2-1)-30] = MU0*I/(2.0*pi)
  
 phi=scipy.linalg.solve(A,b)
 phi = phi.reshape((nx-2, ny-2))
