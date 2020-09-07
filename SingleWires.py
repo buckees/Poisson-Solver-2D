@@ -23,7 +23,7 @@ I = 1.0 # wire current in A
 # According to Ampere's law in integral form
 # B(r|r>r0) = mu0*I/(2*pi*r)
 #The earth's magnetic field is about 0.5 gauss. 
-width, height, nx, ny = 50.0, 50.0, 101, 101
+width, height, nx, ny = 10.0, 10.0, 51, 51
 mesh = MESHGRID(width, height, nx, ny)
 mesh.init_mesh()
 
@@ -40,8 +40,8 @@ for i in range(1, nx-2):
     A[(nx-2)*i-1, (ny-2)*i] = 0
     A[(ny-2)*i, (nx-2)*i-1] = 0
     
-b[0+(nx-2)*int(ny/2-1)+30] = MU0*I/(2.0*pi)
-b[-1-(nx-2)*int(ny/2-1)-30] = -MU0*I/(2.0*pi)
+b[0+(nx-2)*int(ny/2-1)+int(nx/2-1)] = MU0*I/(2.0*pi)
+#b[-1-(nx-2)*int(ny/2-1)-30] = MU0*I/(2.0*pi)
  
 phi=scipy.linalg.solve(A,b)
 phi = phi.reshape((nx-2, ny-2))
@@ -73,27 +73,12 @@ print('B field min = %.2e max = %.2e' % (phi.min(), phi.max()))
 
 #
 fig, ax = plt.subplots(1, 2, figsize=(6,3))
-#ax[0].plot(mesh.posx, mesh.posy,
-#           marker='.', markersize=3,
-#           color='black', linestyle='None')
-# Alternatively, you can manually set the levels
 # and the norm:
 lev_exp = np.arange(np.floor(np.log10(phi[np.nonzero(phi)].min())),
                     np.ceil(np.log10(phi.max())), 0.1)
 levs = np.power(10, lev_exp)
 cs = ax[0].contour(mesh.posx, mesh.posy,
                    phi, levs, norm=colors.LogNorm())
-#ax.clabel(cs, cs.levels)
-#fig.colorbar(cs)
-#ax.quiver(mesh.posx, mesh.posy, vx, vy)
-#ax.plot(pos1[0], pos1[1],
-#        color='red', marker='o', markersize=15)
-#ax.plot(pos2[0], pos2[1],
-#        color='red', marker='o', markersize=15)
-
-#ax[1].plot(mesh.posx, mesh.posy,
-#           marker='.', markersize=3,
-#           color='black', linestyle='None')
 
 lev_exp = np.arange(np.floor(np.log10(bf[np.nonzero(bf)].min())),
                     np.ceil(np.log10(bf.max())), 0.1)
